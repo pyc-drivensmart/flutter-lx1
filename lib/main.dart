@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pages/light_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,17 +42,6 @@ class HeaterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text('柴暖页面', style: TextStyle(fontSize: 28, color: Colors.white)),
-    );
-  }
-}
-
-class LightPage extends StatelessWidget {
-  const LightPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('灯光页面', style: TextStyle(fontSize: 28, color: Colors.white)),
     );
   }
 }
@@ -160,8 +150,8 @@ class _HomePageState extends State<HomePage> {
           height: 120,
           decoration: BoxDecoration(
             color: selected
-                ? Colors.orange
-                : const Color.fromARGB(255, 203, 138, 215),
+                ? const Color.fromARGB(255, 0, 0, 0)
+                : const Color.fromARGB(255, 10, 10, 10),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
