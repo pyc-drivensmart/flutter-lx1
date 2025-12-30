@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/light_page.dart';
+import 'pages/rgb_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,20 +20,6 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
-}
-
-class RgbPage extends StatelessWidget {
-  const RgbPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'RGB 灯页面',
-        style: TextStyle(fontSize: 28, color: Colors.white),
-      ),
-    );
-  }
 }
 
 class HeaterPage extends StatelessWidget {
