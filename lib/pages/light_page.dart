@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class LightPage extends StatefulWidget {
   const LightPage({super.key});
@@ -8,8 +9,12 @@ class LightPage extends StatefulWidget {
 }
 
 class _LightPageState extends State<LightPage> {
-  final List<LightChannel> _lights = List.generate(6, (_) => LightChannel());
+  final logger = Logger(); // 添加这一行
 
+  final List<LightChannel> _lights = List.generate(
+    6,
+    (index) => LightChannel(name: '灯光 ${index + 1}'),
+  );
   @override
   /// 构建UI界面的方法
   ///
@@ -50,54 +55,76 @@ class _LightPageState extends State<LightPage> {
       onTap: () {
         setState(() {
           light.isOn = !light.isOn;
-
-          // 可选：关灯时 PWM 归零
-          if (!light.isOn) {
-            //   light.pwm = 0;
-          }
+          logger.i('灯光 ${index + 1} 状态切换: ${light.isOn ? "开启" : "关闭"}');
         });
       },
       child: Container(
         decoration: BoxDecoration(
-          // 将原来的 Color.fromARGB 后面加上 .withOpacity
-          // 0.0 是完全透明，1.0 是完全不透明
           color: const Color.fromARGB(255, 70, 80, 82).withOpacity(0.5),
           borderRadius: BorderRadius.circular(20),
         ),
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        padding: const EdgeInsets.all(12),
+        child: Row(
           children: [
-            // Icon(
-            //   Icons.lightbulb,
-            //   size: 40,
-            //   color: light.isOn ? Colors.yellow : Colors.grey,
-            // ),// 图片切换逻辑
+            // 左侧：灯光图标
             Image.asset(
               light.isOn
                   ? 'assets/icons/light_on.png'
                   : 'assets/icons/light_off.png',
-              width: 60, // 稍微调大一点
-              height: 60,
+              width: 50,
+              height: 50,
               fit: BoxFit.contain,
             ),
-            const SizedBox(height: 8),
-            Text(
-              'PWM: ${light.pwm.toInt()}%',
-              style: const TextStyle(color: Colors.white),
-            ),
-            Slider(
-              value: light.pwm,
-              min: 0,
-              max: 100,
-              divisions: 100,
-              onChanged: light.isOn
-                  ? (value) {
-                      setState(() {
-                        light.pwm = value;
-                      });
-                    }
-                  : null, // 关灯时禁用
+            const SizedBox(width: 12),
+
+            // 右侧：灯名称和PWM控制
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // 灯名称
+                  Text(
+                    light.name,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+
+                  // PWM值显示
+                  Text(
+                    'PWM: ${light.pwm.toInt()}%',
+                    style: const TextStyle(color: Colors.white70, fontSize: 12),
+                  ),
+
+                  // PWM滑块
+                  Transform.translate(
+                    offset: const Offset(-12, 0), // 向左偏移12像素
+                    child: Slider(
+                      value: light.pwm,
+                      min: 0,
+                      max: 100,
+                      divisions: 100,
+                      activeColor: const Color.fromARGB(255, 47, 162, 215),
+                      inactiveColor: Colors.white24,
+                      onChanged: light.isOn
+                          ? (value) {
+                              setState(() {
+                                light.pwm = value;
+                                logger.i(
+                                  '灯光 ${index + 1} PWM: ${light.pwm.toInt()}%',
+                                );
+                              });
+                            }
+                          : null,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -107,8 +134,9 @@ class _LightPageState extends State<LightPage> {
 }
 
 class LightChannel {
+  String name;
   bool isOn;
   double pwm;
 
-  LightChannel({this.isOn = false, this.pwm = 0});
+  LightChannel({required this.name, this.isOn = false, this.pwm = 0});
 }
