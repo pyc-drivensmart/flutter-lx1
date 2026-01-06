@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui'; // ImageFilter.blur
 
 class SetupItem {
   final String title;
@@ -13,7 +14,7 @@ class SetupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ✅ 在这里定义 items
+    //  在这里定义 items
     final List<SetupItem> items = [
       SetupItem(
         title: '网络设置',
@@ -73,26 +74,40 @@ Widget _buildSetupItem(SetupItem item) {
   return InkWell(
     borderRadius: BorderRadius.circular(12),
     onTap: item.onTap,
-    child: Container(
-      height: 72, // ✅ 长方形条高度
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.black54,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Icon(item.icon, size: 28, color: Colors.white),
-          const SizedBox(width: 16),
-          Text(
-            item.title,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: 10, // 模糊强度
+          sigmaY: 10,
+        ),
+        child: Container(
+          height: 72,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            // ✅ 非透明色，而是“玻璃遮罩色”
+            color: Colors.white.withOpacity(0.12),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.25), // 玻璃边缘高光
+              width: 1,
             ),
           ),
-        ],
+          child: Row(
+            children: [
+              Icon(item.icon, size: 28, color: Colors.white),
+              const SizedBox(width: 16),
+              Text(
+                item.title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     ),
   );

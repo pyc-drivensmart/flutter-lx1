@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'dart:ui';
 
 class RgbPage extends StatefulWidget {
   const RgbPage({super.key});
@@ -30,26 +31,37 @@ class _RgbPageState extends State<RgbPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: pickerSize + 100, // 正方形尺寸（含 padding）
-                height: pickerSize + 100,
-                padding: const EdgeInsets.all(50),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.08),
-                  borderRadius: BorderRadius.circular(16), // 方形 + 圆角
-                ),
-                child: GestureDetector(
-                  onPanDown: _handlePanDown,
-                  onPanUpdate: _handlePanUpdate,
-                  child: CustomPaint(
-                    size: const Size(pickerSize, pickerSize),
-                    painter: _HsvColorPainter(
-                      touchPoint: touchPoint,
-                      currentColor: currentColor,
+              // ✅ 毛玻璃容器开始
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                    sigmaX: 1, // 横向模糊强度
+                    sigmaY: 1, // 纵向模糊强度
+                  ),
+                  child: Container(
+                    width: pickerSize + 100,
+                    height: pickerSize + 100,
+                    padding: const EdgeInsets.all(50),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.15), // 半透明叠加色
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: GestureDetector(
+                      onPanDown: _handlePanDown,
+                      onPanUpdate: _handlePanUpdate,
+                      child: CustomPaint(
+                        size: const Size(pickerSize, pickerSize),
+                        painter: _HsvColorPainter(
+                          touchPoint: touchPoint,
+                          currentColor: currentColor,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
+              //  毛玻璃容器结束
               const SizedBox(height: 20),
             ],
           ),
