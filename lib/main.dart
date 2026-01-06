@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'pages/light_page.dart';
 import 'pages/rgb_page.dart';
+import 'pages/setup_page.dart';
+import 'pages/heater_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,28 +22,6 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
-}
-
-class HeaterPage extends StatelessWidget {
-  const HeaterPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('柴暖页面', style: TextStyle(fontSize: 28, color: Colors.white)),
-    );
-  }
-}
-
-class SetupPage extends StatelessWidget {
-  const SetupPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('设置页面', style: TextStyle(fontSize: 28, color: Colors.white)),
-    );
-  }
 }
 
 class _HomePageState extends State<HomePage> {

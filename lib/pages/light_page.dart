@@ -9,7 +9,7 @@ class LightPage extends StatefulWidget {
 }
 
 class _LightPageState extends State<LightPage> {
-  final logger = Logger(); // 添加这一行
+  final logger = Logger(); //
 
   final List<LightChannel> _lights = List.generate(
     6,
@@ -133,6 +133,7 @@ class _LightPageState extends State<LightPage> {
   }
 }
 
+//结构体，保存变量
 class LightChannel {
   String name;
   bool isOn;
