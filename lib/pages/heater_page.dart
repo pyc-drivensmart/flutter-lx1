@@ -129,7 +129,7 @@ class _MainDialControlState extends State<MainDialControl> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isOn
-                    ? const Color.fromARGB(255, 45, 99, 216).withOpacity(0.8)
+                    ? const Color.fromARGB(255, 55, 113, 240).withOpacity(0.8)
                     : Colors.white.withOpacity(0.18), // 开关颜色区分
                 border: Border.all(color: Colors.white30),
               ),

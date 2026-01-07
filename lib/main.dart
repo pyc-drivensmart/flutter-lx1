@@ -3,6 +3,8 @@ import 'pages/light_page.dart';
 import 'pages/rgb_page.dart';
 import 'pages/setup_page.dart';
 import 'pages/heater_page.dart';
+import 'pages/ac_page.dart';
+
 import 'top.dart';
 import 'bottom.dart';
 
@@ -36,6 +38,7 @@ class _HomePageState extends State<HomePage> {
     RgbPage(),
     HeaterPage(),
     LightPage(),
+    AcPage(),
     SetupPage(),
   ];
 

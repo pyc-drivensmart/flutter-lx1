@@ -37,6 +37,16 @@ Widget buildBottomBar({
         const SizedBox(width: 8),
         _buildNavItem(
           index: 3,
+          text: '空调',
+          normalIcon: 'assets/icons/new_Setup_up.png',
+          selectedIcon: 'assets/icons/new_Setup_d__5.png',
+          currentIndex: currentIndex,
+          onTap: onChanged,
+        ),
+
+        const SizedBox(width: 8),
+        _buildNavItem(
+          index: 4,
           text: '设置',
           normalIcon: 'assets/icons/new_Setup_up.png',
           selectedIcon: 'assets/icons/new_Setup_d__5.png',
